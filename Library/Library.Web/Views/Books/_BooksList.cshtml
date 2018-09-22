@@ -1,0 +1,10 @@
+﻿
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+<h1>List of Books</h1>
+<div class="col-md-offset-10 col-md-2">
+    @Html.ActionLink("Stwórz nową książkę", "Create", null)
+</div>
+@{Html.RenderPartial("BooksList");
+};

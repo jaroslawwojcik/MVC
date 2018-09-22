@@ -1,0 +1,33 @@
+﻿@model Book
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Html.HiddenFor(x=>x.Id)
+<h2>@Model.Title</h2>
+@{
+<table>
+    <tr>
+        <td width="75%">@Html.DisplayNameFor(x => x.Author)</td>
+        <td>@Model.Author</td>
+    </tr>
+    <tr>
+        <td width="75%">@Html.DisplayNameFor(x => x.Genre)</td>
+        <td>@Model.Genre.Name</td>
+    </tr>
+    <tr>
+        <td width="75%">@Html.DisplayNameFor(x => x.PublishYear)</td>
+        <td>@Model.PublishYear</td>
+    </tr>
+    <tr>
+        <td>@Html.ActionLink("Back", "Index", "Books", null, new { @class = "btn btn-primary" })</td>
+    </tr>
+    <tr>
+        <td>@Html.ActionLink("Edit", "Edit", "Books", new { id = Model.Id }, new { @class = "btn btn-primary" })</td>
+    </tr>
+    <tr>
+        <td>@Html.ActionLink("Delete", "Delete", "Books", new { id = Model.Id }, new { @class = "btn btn-primary" })</td>
+    </tr>
+</table>
+}
+
