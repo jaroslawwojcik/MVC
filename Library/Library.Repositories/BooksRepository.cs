@@ -1,4 +1,5 @@
-﻿using Library.Models;
+﻿using Library.Database;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace Library.Repositories
                 Id = 1,
                 Title = "Myśli współczesnego człowieka",
                 Author = "Roman Dmowski",
-                PublishYear = 1920,
+                ProductionYear = 1920,
                 Genre = new Genre
                 {
                     Id = 1,
@@ -26,7 +27,7 @@ namespace Library.Repositories
                 Id = 1,
                 Title = "Czerwona książeczka",
                 Author = "Mao Ze Dung",
-                PublishYear = 1925,
+                ProductionYear = 1925,
                 Genre = new Genre
                 {
                     Id = 2,
@@ -36,12 +37,18 @@ namespace Library.Repositories
         };
         public List<Book> GetBooks()
         {
-            return _allBooks;
+            using(var context = new LibraryContext())
+            {
+                return context.Book.Include(x => x.Genre).ToList();
+            }
         }
 
         public Book GetBookById(int id)
         {
-            return _allBooks.FirstOrDefault(x => x.Id == id);
+            using (var context = new LibraryContext())
+            {
+                return context.Book.Where(x => x.Id == id).Include(x => x.Genre).Single();
+            }
         }
         
         public int AddBook(Book book)
@@ -75,7 +82,7 @@ namespace Library.Repositories
 
         public object GetBookByGenreId(int value)
         {
-            return _allBooks.FirstOrDefault(x => x.GenreId == value);
+            return _allBooks.FirstOrDefault(x => x.Genre.Id == value);
         }
     }
 }

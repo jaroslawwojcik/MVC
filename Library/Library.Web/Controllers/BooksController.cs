@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Library.Models;
+using Library.Database;
 using Library.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -15,9 +15,13 @@ namespace Library.Web.Controllers
 
         public IActionResult Index()
         {
-            
+            ViewBag.Genres = new GenreRepository().GetAll().Select(x => new SelectListItem
+            {
+                Text = x.Name,
+                Value = x.Id.ToString()
+            });
             var booksList = _booksRepository.GetBooks();
-
+            
 
             return View(booksList);
         }
@@ -42,16 +46,23 @@ namespace Library.Web.Controllers
         public IActionResult Create(Book book)
         {
           if (ModelState.IsValid)
-            { 
+            {
+                
                 var newBookId = _booksRepository.AddBook(book);
                 return RedirectToAction("Details", new { id = newBookId });
             }
-            return RedirectToAction("Details");
+            ViewBag.Genres = new GenreRepository().GetAll().Select(x => new SelectListItem
+            {
+                Text = x.Name,
+                Value = x.Id.ToString()
+            });
+            return View(book);
         }
 
         
         public IActionResult Edit(int id)
         {
+
             ViewBag.Genres = new GenreRepository().GetAll().Select(x => new SelectListItem
             {
                 Text = x.Name,
@@ -63,8 +74,17 @@ namespace Library.Web.Controllers
         [HttpPost]
         public IActionResult Edit(int id, Book book)
         {
-            var newBookId = _booksRepository.EditBook(id, book);
-            return RedirectToAction("Details", new { id = newBookId });
+            if (ModelState.IsValid)
+            {
+                var newBookId = _booksRepository.EditBook(id, book);
+                return RedirectToAction("Details", new { id = newBookId });
+            }
+            ViewBag.Genres = new GenreRepository().GetAll().Select(x => new SelectListItem
+            {
+                Text = x.Name,
+                Value = x.Id.ToString()
+            });
+            return View(book);
         }
 
         
@@ -73,6 +93,8 @@ namespace Library.Web.Controllers
             var newBookId = _booksRepository.DeleteBook(id);
             return RedirectToAction("Index");
         }
+
+
 
         public IActionResult BooksList(int? genreId)
         {
@@ -83,5 +105,7 @@ namespace Library.Web.Controllers
             }
             return PartialView("_BooksList");
         }
+
+        
     }
 }

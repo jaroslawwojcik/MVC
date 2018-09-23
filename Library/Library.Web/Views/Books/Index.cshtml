@@ -6,32 +6,30 @@
 
 
 }
+
+
 <h2>List of Books</h2>
-<table style="width:100%" class="table">
-    <tr>
-        <th>@Html.DisplayNameFor(x => x.FirstOrDefault().Id)</th>
-        <th>@Html.DisplayNameFor(x => x.FirstOrDefault().Title)</th>
-        <th>@Html.DisplayNameFor(x => x.FirstOrDefault().PublishYear)</th>
-        <th>@Html.DisplayNameFor(x => x.FirstOrDefault().Author)</th>
-        <th>@Html.DisplayNameFor(x => x.FirstOrDefault().Genre)</th>
-        <th>Action</th>
-    </tr>
-    @{
-        foreach(var book in Model)
-        {
-        <tr>
-            <td>@book.Id</td>
-            <td>@book.Title</td>
-            <td>@book.PublishYear</td>
-            <td>@book.Author</td>
-            <td>@book.Genre.Name</td>
-            <td>@Html.ActionLink("Details", "Details", "Books", new { id = book.Id },new {@class = "btn btn-primary"})</td>
-        </tr>
-        }
-        
-    }
+@Html.DropDownListFor(x => x.FirstOrDefault().GenreId, (IEnumerable<SelectListItem>)ViewBag.Genres, new { htmlAttributes = new { id = "GenreId" } })
 
-</table>
-<div>@Html.ActionLink("Add", "Create", "Books", null , new { @class = "btn btn-primary" })</div>
+<div id="booksListContainer">
+    @{Html.RenderPartial("_BooksList", Model); }
+</div>
 
+<div>@Html.ActionLink("Add", "Create", "Books", null, new { @class = "btn btn-primary" })</div>
+@section Scripts{
+    <script>
+    var dropdownElement = $("#GenreId");
+    dropdownElement.change(function () {
+        var genreId = dropdownElement.val();
+        $.get(
+            {
+                url: '@Url.Action("BooksList")' + '?genreId=' + genreId,
+                success: function (data) {
+                    $("#booksListContainer").html(data);
 
+                }
+            });
+
+    });
+    </script>
+}

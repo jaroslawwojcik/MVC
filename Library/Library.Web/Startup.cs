@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FluentValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -46,5 +47,6 @@ namespace Library.Web
                     template: "{controller=Books}/{action=Index}/{id?}");
             });
         }
+      
     }
 }

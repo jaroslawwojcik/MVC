@@ -1,4 +1,4 @@
-﻿using Library.Models;
+﻿using Library.Database;
 using Library.Web.ControllerDI.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -20,7 +20,7 @@ namespace Library.Web.ControllerDI.Services
                         Id = 1,
                         Title = "Myśli współczesnego człowieka",
                         Author = "Roman Dmowski",
-                        PublishYear = 1920,
+                        ProductionYear = 1920,
                         Genre = new Genre
                         {
                             Id = 1,
@@ -32,7 +32,7 @@ namespace Library.Web.ControllerDI.Services
                         Id = 1,
                         Title = "Czerwona książeczka",
                         Author = "Mao Ze Dung",
-                        PublishYear = 1925,
+                        ProductionYear = 1925,
                         Genre = new Genre
                         {
                             Id = 1,

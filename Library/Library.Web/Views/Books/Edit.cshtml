@@ -3,7 +3,7 @@
     ViewData["Title"] = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+@Html.ValidationSummary("", new { @class = "text-danger" })
 <h2>Edit</h2>
 @using (Html.BeginForm())
 {
@@ -13,18 +13,20 @@
         </div>
         <div class="col-md-10 col-xs-12">
             @Html.EditorFor(x => x.Author)
+            @Html.ValidationMessageFor(x => x.Author, "", new { @class = "text-danger" })
         </div>
         <div class="col-md-2 col-xs-12">
             @Html.DisplayNameFor(x => x.Title)
         </div>
         <div class="col-md-10 col-xs-12">
             @Html.EditorFor(x => x.Title)
+            @Html.ValidationMessageFor(x => x.Title, "", new { @class = "text-danger" })
         </div>
         <div class="col-md-2 col-xs-12">
-            @Html.DisplayNameFor(x => x.PublishYear)
+            @Html.DisplayNameFor(x => x.ProductionYear)
         </div>
         <div class="col-md-10 col-xs-12">
-            @Html.EditorFor(x => x.PublishYear)
+            @Html.EditorFor(x => x.ProductionYear)
         </div>
         <div class="col-md-2 col-xs-12">
             @Html.DisplayNameFor(x => x.Genre)
